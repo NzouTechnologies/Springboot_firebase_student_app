@@ -22,15 +22,14 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
         
-      - name: Code Quality Analysis
-        uses: SonarSource/sonarqube-scan-action@master
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@v1
         with:
-          projectBaseDir: .
-          sonar.projectKey: "githubprojects_firebase-springboot-studentproject"
-          sonar.organization: "githubprojects"
-        env:
-          SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONARQUBE_URL }}
+          sonar-token: ${{ secrets.SONAR_TOKEN }}
+          project-key: githubprojects_firebase-springboot-studentproject
+          project-name: Firebase_Springboot_studentproject
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
 
       - name: Build and test
         run: mvn clean test
