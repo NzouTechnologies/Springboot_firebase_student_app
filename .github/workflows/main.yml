@@ -15,7 +15,65 @@ jobs:
     
     steps:
       - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+          
+      - name: Check out code
+        uses: actions/checkout@v2
+        
+      - name: SonarCloud Scan
+        run: mvn -B verify sonar:sonar -Dsonar.projectKey=githubprojects_firebase-springboot-studentproject -Dsonar.organization=githubprojects -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=4fb3a629ee3d22021e9789933db64c0a5eeabc51
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        
+  build_and_test:
+    needs: analyse_code
+    name: Build and Test
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+          
+      - name: Check out code
+        uses: actions/checkout@v2
+        
+      - name: Build and test
+        run: mvn clean test
+        
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-results
+          path: target/surefire-reports
+          
+  build_docker_image:
+    needs: build_and_test
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+      
+      - name: Build and test
+        run: mvn clean package -DskipTests
+        
+      - name: Build Docker Image
         run: |
-          ls
           mkdir dockerfiles
+          cd dockerfiles
+          docker build -t studentimage:${{ github.run_number }} .
           ls
