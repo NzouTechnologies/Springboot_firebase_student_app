@@ -10,7 +10,7 @@ on:
 
 jobs:
   analyse_code:
-    name: Build
+    name: Code Analysis
     runs-on: ubuntu-latest
     
     steps:
@@ -31,7 +31,7 @@ jobs:
 
   build_and_test:
     needs: analyse_code
-    name: Test
+    name: Build and Test
     runs-on: ubuntu-latest
     
     steps:
