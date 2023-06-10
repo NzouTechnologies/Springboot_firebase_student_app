@@ -15,4 +15,7 @@ jobs:
     
     steps:
       - name: Set up JDK 17
-        run: ls
+        run: |
+          ls
+          mkdir dockerfiles
+          ls
