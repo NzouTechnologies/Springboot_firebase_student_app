@@ -26,6 +26,8 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@master
         with:
           projectBaseDir: .
+          sonar.projectKey: "Firebase_Springboot_studentproject"
+          sonar.organization: "githubprojects"
         env:
           SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONARQUBE_URL }}
