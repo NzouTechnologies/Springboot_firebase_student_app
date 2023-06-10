@@ -73,5 +73,7 @@ jobs:
         
       - name: Build Docker Image
         run: |
+          echo 'FROM ubuntu:latest
+          RUN apt-get update && apt-get install -y curl
+          CMD ["curl", "https://example.com"]' |
           docker build -t studentimage:${{ github.run_number }} .
-          ls
