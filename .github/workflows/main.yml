@@ -24,7 +24,7 @@ jobs:
         uses: actions/checkout@v2
         
       - name: SonarCloud Scan
-        run: mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=githubprojects_firebase-springboot-studentproject
+        run: mvn -B verify sonar:sonar -Dsonar.projectKey=githubprojects_firebase-springboot-studentproject -Dsonar.organization=githubprojects -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=4fb3a629ee3d22021e9789933db64c0a5eeabc51
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
