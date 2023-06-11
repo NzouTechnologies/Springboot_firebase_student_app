@@ -73,7 +73,6 @@ jobs:
         
       - name: Build Docker Image
         run: |
-          mvn clean install k8s:build
           mvn clean package jkube:build -Djkube.build.strategy=docker \
             -Djkube.docker.build.image=studentimage:${{ github.run_number}} \
             -Djkube.docker.build.ports=8080
