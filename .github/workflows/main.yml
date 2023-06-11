@@ -80,4 +80,4 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
-           mvn k8s:build -DskipTests -Djkube.docker.build.ports=8081 -Djkube.generator.name="student-image_${{github.run_number}}"
+           mvn k8s:push -DskipTests -Djkube.docker.build.ports=8081 -Djkube.generator.name="student-image_${{github.run_number}}"
