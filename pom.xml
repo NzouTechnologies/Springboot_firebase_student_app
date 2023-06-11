@@ -61,11 +61,18 @@
             </plugin>
                  
             <plugin>
-               <groupId>org.eclipse.jkube</groupId>
-               <artifactId>jkube-maven-plugin</artifactId>
-               <version>1.5.1</version>
-               <extensions>true</extensions>
-             </plugin>
+	     <groupId>org.eclipse.jkube</groupId>
+	     <artifactId>kubernetes-maven-plugin</artifactId>
+	     <version>1.8.0</version>
+	     <executions>
+	       <execution>
+	         <goals>
+	            <goal>resource</goal>
+	            <goal>build</goal>
+	         </goals>
+	       </execution>
+	      </executions>
+	   </plugin>
                  
             <plugin>
              <groupId>org.jacoco</groupId>
