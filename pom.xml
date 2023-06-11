@@ -62,23 +62,9 @@
                  
             <plugin>
                <groupId>org.eclipse.jkube</groupId>
-               <artifactId>kubernetes-maven-plugin</artifactId>
-               <version>1.1.2</version>
-               <configuration>
-                 <images>
-                   <image>
-                     <name>studentimage</name> <!-- Replace with your desired image name -->
-                     <build>
-                       <from>
-                         <name>adoptopenjdk:17-jdk-hotspot</name> <!-- Java 17 base image -->
-                       </from>
-                       <ports>
-                         <port>8080</port> <!-- Port to expose outside the container -->
-                       </ports>
-                     </build>
-                   </image>
-                 </images>
-               </configuration>
+               <artifactId>jkube-maven-plugin</artifactId>
+               <version>1.5.1</version>
+               <extensions>true</extensions>
              </plugin>
                  
             <plugin>
