@@ -73,9 +73,8 @@ jobs:
         
       - name: Build Docker Image
         run: |
-          mvn clean package jkube:build -Djkube.build.strategy=docker \
-            -Djkube.docker.build.image=studentimage:${{ github.run_number}} \
-            -Djkube.docker.build.ports=8080
+          mvn k8s:build -Pkubernetes -DskipTests -Djkube.docker.build.ports=8081 -Djkube.generator.name="kennedy02/bringbank:${{github.run_number}}"
+          
       - name: Archive Docker Image
         uses: actions/upload-artifact@v2
         with:
