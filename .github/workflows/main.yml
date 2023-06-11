@@ -73,10 +73,10 @@ jobs:
         
       - name: Build Docker Image
         run: |
-          mvn k8s:build -DskipTests -Djkube.docker.build.ports=8081 -Djkube.generator.name="kennedy02/bringbank:${{github.run_number}}"
+          mvn k8s:build -DskipTests -Djkube.docker.build.ports=8081 -Djkube.generator.name="student-image_${{github.run_number}}"
           
       - name: Archive Docker Image
         uses: actions/upload-artifact@v2
         with:
-          name: student-image:${{ github.run_number}}
+          name: student-image_${{ github.run_number}}
           path: target/*.jar
