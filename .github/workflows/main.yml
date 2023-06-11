@@ -77,7 +77,7 @@ jobs:
      
       - name: Push Docker Image
         env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
         run: |
            mvn k8s:push -DskipTests -Djkube.docker.build.ports=8081 -Djkube.generator.name="student-image_${{github.run_number}}"
