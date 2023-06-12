@@ -28,5 +28,17 @@ jobs:
     
     - name: View Docker Image
       run: docker images 
+      
+    - name: Push Docker Image
+      run: |
+        DOCKER_IMAGE_NAME=nzoutech/studentimage
+        DOCKER_IMAGE_TAG=${{github.run_number }}
+        DOCKER_REGISTRY=docker.io
+        DOCKER_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKER_PASSWORD=${{ secrets.DOCKERHUB_TOKEN }}
+        docker tag $DOCKER_IMAGE_NAME $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG
+        echo $DOCKER_PASSWORD | docker login $DOCKER_REGISTRY -u $DOCKER_USERNAME --password-stdin
+        docker push $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG
+      
 
     
