@@ -24,7 +24,7 @@ jobs:
         distribution: 'adopt'
 
     - name: Build Docker Image
-      run: mvn k8s:build -DskipTests -Djkube.generator.name="${{secrets.DOCKERHUB_USERNAME}}/bringbank"
+      run: mvn k8s:build -DskipTests -Djkube.generator.name="nzoutech/studentimage"
     
     - name: View Docker Image
       run: docker images 
