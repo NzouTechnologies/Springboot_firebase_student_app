@@ -80,4 +80,5 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
         run: |
+           docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
            mvn k8s:push -DskipTests -Djkube.docker.build.ports=8081 -Djkube.generator.name="student-image_${{github.run_number}}"
