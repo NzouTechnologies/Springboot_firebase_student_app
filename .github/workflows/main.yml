@@ -80,5 +80,8 @@ jobs:
       - name: Log in to Docker Hub
         run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
       
+      - name: Docker tag
+        run: docker tag nzoutech/student-image:${{github.run_number}} nzoutech/student-image:latest
+      
       - name: Push Docker Image
-        run: docker push nzoutech/student-image_${{github.run_number}}
+        run: docker push nzoutech/student-image:latest
