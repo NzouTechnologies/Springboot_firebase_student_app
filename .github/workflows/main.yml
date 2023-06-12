@@ -27,6 +27,6 @@ jobs:
       run: mvn k8s:build -DskipTests -Djkube.image.name=studentimage4
     
     - name: View Docker Image
-      run: docker images studentimage4
+      run: docker images 
 
     
