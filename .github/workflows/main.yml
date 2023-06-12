@@ -8,14 +8,31 @@ on:
     branches:
       - main
 
-jobs:
-  analyse_code:
-    name: Code Analysis
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Set up JDK 17
-        uses: actions/setup-java@v2
-        with:
-          java-version: '17'
-          distribution: 'adopt'
+jobs:          
+ build_push_docker_image:
+  name: Build and Push Docker Image
+  runs-on: ubuntu-latest
+
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+        distribution: 'adopt'
+
+    - name: Build Docker Image
+      run: mvn k8s:build -DskipTests
+
+    - name: Push Docker Image
+      run: |
+        DOCKER_IMAGE_NAME=studentimage
+        DOCKER_IMAGE_TAG=${{github.run_number }}
+        DOCKER_REGISTRY=docker.io
+        DOCKER_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKER_PASSWORD=${{ secrets.DOCKERHUB_TOKEN }}
+        docker tag $DOCKER_IMAGE_NAME $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG
+        echo $DOCKER_PASSWORD | docker login $DOCKER_REGISTRY -u $DOCKER_USERNAME --password-stdin
+        docker push $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG
