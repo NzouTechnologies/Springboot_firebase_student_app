@@ -71,12 +71,9 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       
-      - name: Build and test
-        run: mvn clean package -DskipTests
-        
       - name: Build Docker Image
         run: |
-          mvn k8s:build -DskipTests -Djkube.docker.build.ports=8081 -Djkube.generator.name="student-image
+          mvn clean package -DskipTests
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
-          docker tag nzoutech/student-image nzoutech/student-image:${{github.run_number}}"
-          docker push nzoutech/student-image:${{github.run_number}}"
+          docker build -t nzoutech/student-image:${{github.run_number}} .
+          docker push nzoutech/student-image:${{github.run_number}}
