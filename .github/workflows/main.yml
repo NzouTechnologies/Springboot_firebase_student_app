@@ -75,5 +75,5 @@ jobs:
         run: |
           mvn k8s:build -DskipTests
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
-          docker tag your-image:latest your-image:${{ github.run_number }}
-          docker push your-image:${{ github.run_number }}
+          docker tag student-image:latest nzoutech/student-image:${{github.run_number}}
+          docker push nzoutech/student-image:${{github.run_number}}
