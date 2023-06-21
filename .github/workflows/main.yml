@@ -36,7 +36,7 @@ jobs:
           gcloud run deploy your-service-name \
             --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/studentsimage \
             --platform managed \
-            --region europe-central2
+            --region europe-west1
       
       - name: View Docker Image
         run: docker images 
