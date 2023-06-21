@@ -36,7 +36,8 @@ jobs:
         
       - name: View Docker Image
         run: |
-          echo "${{ secrets.GCP_SA_KEY }}" | base64 --decode > keyfile.json
+          echo "${{ secrets.GCP_SA_KEY }}" > keyfile.json
+          cat keyfile.json
           
      
       - name: Deploy to Google Cloud Run
