@@ -40,11 +40,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@master
+        
+      - name: Setup GCP Service Account
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
-          project_id: brave-tea-390512
-          service_account_key: ${{ secrets.GCLOUD_AUTH }}
-
+          version: 'latest'
+          service_account_email: ${{ secrets.GCP_SA_EMAIL }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
      
