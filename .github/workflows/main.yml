@@ -35,7 +35,10 @@ jobs:
         run: docker images 
         
       - name: View Docker Image
-        run: docker push gcr.io/studentdeployproject/studentsimage
+        run: |
+          gcloud auth activate-service-account --key-file=${{ secrets.GCP_SA_KEY }}
+          gcloud auth configure-docker
+          docker push gcr.io/studentdeployproject/studentsimage
      
       - name: Deploy to Google Cloud Run
         run: |
