@@ -36,7 +36,7 @@ jobs:
         
       - name: View Docker Image
         run: |
-          echo "${{ secrets.GCP_SA_KEY }}" > keyfile.json
+          echo "${{ secrets.GCP_SA_KEY }}" | base64 --decode > keyfile.json
           gcloud auth activate-service-account --key-file=keyfile.json
           gcloud auth configure-docker
           rm keyfile.json
