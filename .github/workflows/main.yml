@@ -33,6 +33,9 @@ jobs:
       
       - name: View Docker Image
         run: docker images 
+        
+      - name: View Docker Image
+        run: docker push gcr.io/studentdeployproject/studentsimage
      
       - name: Deploy to Google Cloud Run
         run: |
