@@ -52,6 +52,8 @@ jobs:
           }
           EOF
           gcloud auth activate-service-account --key-file=keyfile.json
+          gcloud auth configure-docker
+          docker push gcr.io/studentdeployproject/studentsimage
           rm keyfile.json
      
       - name: Deploy to Google Cloud Run
