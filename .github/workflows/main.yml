@@ -35,6 +35,11 @@ jobs:
         run: docker images
         
       - name: Tag google image
-        run: gcloud container images add-tag nzoutech/studentsimage gcr.io/${{secrets.GCP_PROJECT_ID}}/studentsimage
+        run: gcloud container images add-tag nzoutech/studentsimage:latest gcr.io/${{ secrets.GCP_PROJECT_ID }}/studentsimage:latest
+        
+      - name: view images
+        run: |
+          gcloud auth activate-service-account --key-file=${{ secrets.GCP_SA_KEY }}
+          gcloud container images list
       
      
