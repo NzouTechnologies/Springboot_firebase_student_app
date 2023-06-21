@@ -35,7 +35,7 @@ jobs:
         run: docker images
         
       - name: Tag google image
-        run: gcloud container images add-tag nzoutech/studentsimage gcr.io/${{secrets.GCP_PROJECT_ID}}/studentsimage:${{github.run_number}}
+        run: gcloud container images add-tag nzoutech/studentsimage gcr.io/${{secrets.GCP_PROJECT_ID}}/studentsimage:sha256:${{github.run_number}}
 
       
      
