@@ -64,4 +64,5 @@ jobs:
             --allow-unauthenticated \
             --project ${{ secrets.GCP_PROJECT_ID }} \
             --region europe-west1
+          gcloud run logs --revision=studentimage-00005-vuy
       
