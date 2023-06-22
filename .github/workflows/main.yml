@@ -33,27 +33,14 @@ jobs:
       
       - name: View Docker Image
         run: docker images 
-        
-      - name: Push to GCP
+      
+      - name: Deploy to Google Cloud Run
         run: |
-          cat > keyfile.json << EOF
-          {
-            "type": "service_account",
-            "project_id": "studentdeployproject",
-            "private_key_id": "1ffd1f2101521cd06d4ba8a7fd8c1ef67a9bf138",
-            "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCtVNUxIh+iYqmy\nL/o6QVSVuE+NE3o923t4/w4xUI7WZO2J7fnHbsrDDuXXprSX+811D/8ZurwT7P1A\nikV8dyX4GF19TD8vbag5D4s82QvO915xx1oVa37SJsBRoYBUIurdgLex/lAj9Isu\nwUGi2TvUEVSIz9D1RdHPnySFiumqk//UW07KeWshGuU419TmfyNBXrlcZjtctAC+\n/IVyFIF2W6zNuYUOevAZGHMprpppyAMEgTxO7hI3bfecT5BUTxvtQGFQlYvnWSs5\nIONu48tys5OwH/mwtavamovOg8qKz+84tUjjNfwjE5NqnyqtNNUIxzz0HVzmKpge\ns5kBTVcTAgMBAAECggEANDdNLksIWqP8WSio6inKMHxgwrAucDoRfUbg4KxTC3VG\nNfoR+CmBPbfcN9YJq4t4vp4+DGM7y4jmVi4RdshyEMZOS7PPiRswxVfQa1k7fHL6\n6a3TjoZeozJ3V2Aex7npJSdkr2NcgyhlUYV4n3Vv15gM7lYkre8FoNVhbDWH5RHH\nXdlZ+1kVQYWOtaVw3pmpaW2BZYb9VEOi/yWdWqwUHh1GLveePto5m4pFF0JKIbyd\n253BKD4490Jt+nNVz4VF6Ha+8+q5vH1GGuQa5FSf+Yyj0hQJL88X6Xel40vscf12\nkEtwwKOBKD7XgUq3cEXyzEHYGC1GJdjfUjLwNFM1+QKBgQDmiYCbHzGbR7hXeSu9\n05f3gDXkOeWzGu2OznM5PGCuII9ftfhSZsJxsxYKkyoytZVTG6+yQBbReJ4VhxkC\n63XmZ1LLEBph4LlwqI3rmB+tOH3Pixw5kc6zIf2Xuu9Nu3mel4FWIRPUPZwAeNVv\neAuqgpTt82NGthkeNCsuANU1bwKBgQDAedK0IHWC7F7a77Yr5c+piuUwHwJRKJGJ\nsn7+5ijaHTuJtWfKToEU1xsaDiRvHta4XFSH8ccYAs3K3HeTnAbR8WMPIY9U7fy7\nCti7Oi/7woUn8HnLjy0z0NPWJnY9YNmK/t+tdrQIcUyUdbhzRNu90oXPIDEuTdoy\nhWB9D5iOnQKBgDAq2JkQmm/EO2rjYVVHKYBH5Hqr8idK4AmvbvmteNHI8cvgnGKz\nH7tb3KYW+4Ee2XVE2p/Wri3UEsuSr5Ihmj+qpOzSj4CV0IkOXqCz5yJtJDRB74LD\nyTk6R9706t0F57JQG3DgdmEpAjhDBu1EWsOkhvN0n/B9SaA67C6vc9y3AoGABNTJ\n+iV6bZ/bPamYq/9nt/y5hfyxRTI8fPVTBLjoO5lSPkGkakqQKOLBVmUWeweOIjCH\nGqZx9eNUIQxpn/XhofFqKB4Sh/I1TsiV6hUq0Snvx7HcjMR6QPuz5YMvopjEvR1q\npeL939xgLLXLvHD1Bw26uBk5wszHdk8svdbfYG0CgYAYqtxdOHkkry8I2bSXUonG\nKOPWJzjGaopiUY+lb+tkOCQOX2w8dYw9BP7PyRexDHUIkKi1eOGOzn/qmMarNBO8\nUnOqMP9ETaZGqLXq6tbcHAt7a/eZtuLVCfdEIQ+GhXK8gM2IfiqLGLJsLLTyzn9B\nr9MHZ5e1pcBfMRIYbG8hKQ==\n-----END PRIVATE KEY-----\n",
-            "client_email": "git-action-deploy@studentdeployproject.iam.gserviceaccount.com",
-            "client_id": "104058027362602346165",
-            "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-            "token_uri": "https://oauth2.googleapis.com/token",
-            "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-            "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/git-action-deploy%40studentdeployproject.iam.gserviceaccount.com",
-            "universe_domain": "googleapis.com"
-          }
-          EOF
-          gcloud auth activate-service-account --key-file=keyfile.json
-          gcloud auth configure-docker
-          docker push gcr.io/studentdeployproject/studentsimage
-          docker run -p 8082:80 -d gcr.io/studentdeployproject/studentsimage
-          docker images
-          rm keyfile.json
+          gcloud container images list --project=studentdeployproject
+          gcloud run deploy studentimage \
+            --image gcr.io/studentdeployproject/studentsimage \
+            --platform managed \
+            --allow-unauthenticated \
+            --project ${{ secrets.GCP_PROJECT_ID }} \
+            --region europe-west1 
+      
