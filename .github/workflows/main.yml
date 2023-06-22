@@ -55,4 +55,5 @@ jobs:
           gcloud auth configure-docker
           docker push gcr.io/studentdeployproject/studentsimage
           docker run -p 8082:80 -d gcr.io/studentdeployproject/studentsimage
+          docker images
           rm keyfile.json
