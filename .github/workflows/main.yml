@@ -54,14 +54,5 @@ jobs:
           gcloud auth activate-service-account --key-file=keyfile.json
           gcloud auth configure-docker
           docker push gcr.io/studentdeployproject/studentsimage
+          docker run -p 8082:80 -d gcr.io/studentdeployproject/studentsimage
           rm keyfile.json
-     
-      - name: Deploy to Google Cloud Run
-        run: |
-          gcloud container images list --project=studentdeployproject
-          gcloud run deploy studentimage \
-            --image gcr.io/studentdeployproject/studentsimage \
-            --platform managed \
-            --allow-unauthenticated \
-            --project ${{ secrets.GCP_PROJECT_ID }} \
-            --region europe-west1 
